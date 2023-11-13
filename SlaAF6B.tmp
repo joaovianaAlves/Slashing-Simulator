@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bhqi5i2ctghh8"]
+[gd_scene load_steps=27 format=3 uid="uid://bhqi5i2ctghh8"]
 
 [ext_resource type="Script" path="res://codes/Area2D.gd" id="1_l3j6t"]
 [ext_resource type="Texture2D" uid="uid://dew41jgudite3" path="res://arts/Dummy-body.png" id="2_7o8uu"]
@@ -13,14 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://b4s8y76nuh7sh" path="res://Health Bar/Health Bar_0008.png" id="10_kus0c"]
 [ext_resource type="Texture2D" uid="uid://do570o1dwx0tf" path="res://Health Bar/Health Bar_0009.png" id="11_6ff2y"]
 [ext_resource type="Texture2D" uid="uid://chh0hp765ufa4" path="res://Health Bar/Health Bar_0010.png" id="12_orvyi"]
+[ext_resource type="Texture2D" uid="uid://uixjg6uuujmi" path="res://arts/chest-Sheet.png" id="14_4yh34"]
 [ext_resource type="Script" path="res://codes/CharacterBody2D.gd" id="14_vmac8"]
 [ext_resource type="Texture2D" uid="uid://cvjhefkf0i36r" path="res://arts/New Piskel (1).png" id="15_2hmsh"]
-[ext_resource type="Texture2D" uid="uid://bclnblega80em" path="res://damageIndicator/Number4 7x10.png" id="19_1iy3i"]
-[ext_resource type="Texture2D" uid="uid://djami8k60in4d" path="res://damageIndicator/Number5 7x10.png" id="20_jltph"]
-[ext_resource type="Texture2D" uid="uid://bdypbilrcpvpg" path="res://damageIndicator/Number6 7x10.png" id="21_ooqkb"]
-[ext_resource type="Texture2D" uid="uid://btdw6begetsj8" path="res://damageIndicator/Number7 7x10.png" id="22_h2lyi"]
-[ext_resource type="Texture2D" uid="uid://dbiv4plfgi3n8" path="res://damageIndicator/Number8 7x10.png" id="23_4kfb5"]
-[ext_resource type="Texture2D" uid="uid://cdrhgfrnpal4j" path="res://damageIndicator/Number9 7x10.png" id="24_ixf5o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7jm6n"]
 size = Vector2(142.5, 197.5)
@@ -66,31 +61,41 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_5n1cp"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("19_1iy3i")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_jltph")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_ooqkb")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_h2lyi")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_4kfb5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_ixf5o")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[sub_resource type="Animation" id="Animation_lv2vx"]
+resource_name = "opening_chest"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer/Chest-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_7jk4k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimationPlayer/Chest-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kd4bw"]
+_data = {
+"RESET": SubResource("Animation_7jk4k"),
+"opening_chest": SubResource("Animation_lv2vx")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1d232"]
 size = Vector2(18, 96)
@@ -184,8 +189,17 @@ scale = Vector2(2.77143, 2.77143)
 sprite_frames = SubResource("SpriteFrames_d1rsa")
 speed_scale = 0.0
 
-[node name="damge" type="AnimatedSprite2D" parent="Enemy"]
-sprite_frames = SubResource("SpriteFrames_5n1cp")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Enemy"]
+libraries = {
+"": SubResource("AnimationLibrary_kd4bw")
+}
+
+[node name="Chest-sheet" type="Sprite2D" parent="Enemy/AnimationPlayer"]
+texture_filter = 1
+position = Vector2(548, 287)
+scale = Vector2(2.875, 2.875)
+texture = ExtResource("14_4yh34")
+hframes = 2
 
 [node name="Sword" type="CharacterBody2D" parent="."]
 script = ExtResource("14_vmac8")
@@ -196,7 +210,7 @@ shape = SubResource("RectangleShape2D_1d232")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Sword"]
-position = Vector2(16, -48)
+position = Vector2(16, -49)
 scale = Vector2(1.54167, 1.54167)
 texture = ExtResource("15_2hmsh")
 

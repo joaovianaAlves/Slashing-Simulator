@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dpn5w8nb35icy"]
 
-[ext_resource type="Script" path="res://CharacterBody2D.gd" id="1_vxw3p"]
-[ext_resource type="Texture2D" uid="uid://cvjhefkf0i36r" path="res://New Piskel (1).png" id="2_4kvcg"]
+[ext_resource type="Script" path="res://codes/CharacterBody2D.gd" id="1_vxw3p"]
+[ext_resource type="Texture2D" uid="uid://cvjhefkf0i36r" path="res://arts/New Piskel (1).png" id="2_4kvcg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1d232"]
 size = Vector2(11, 63)
